@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="N1 — первый жилой комплекс в Нижнем Новгороде от UDS. Авторская архитектура, Канавинский район, паркинг, холлы класса premium.">
+  <meta property="og:title" content="N1 — Первый жилой комплекс от UDS в Нижнем Новгороде">
+  <meta property="og:description" content="Авторская архитектура, Канавинский район, паркинг, холлы класса premium.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80">
+  <meta property="og:type" content="website">
+  <title>N1 — Нижний Новгород</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0C0C0E;
+      color: #F0EDE8;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { display: block; max-width: 100%; }
+    a { text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:          #0C0C0E;
+      --surface:     #1A1A1C;
+      --text:        #F0EDE8;
+      --text-dim:    rgba(240, 237, 232, 0.55);
+      --meta:        #6B6B6B;
+      --accent:      #C4956A;
+      --cta:         #E8DED0;
+      --border:      rgba(240, 237, 232, 0.07);
+      --border-mid:  rgba(240, 237, 232, 0.14);
+      --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    /* ── GRAIN ──────────────────────────────────────────── */
+    #grain {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ── TYPOGRAPHY HELPERS ──────────────────────────────── */
+    .meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--meta);
+      display: block;
+    }
+    .meta-accent { color: var(--accent); }
+
+    .display {
+      font-family: var(--serif);
+      font-weight: 400;
+      line-height: 1.03;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(40px, 5.5vw, 76px);
+      line-height: 1.06;
+      letter-spacing: -0.022em;
+      color: var(--text);
+    }
+
+    .body {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-dim);
+    }
+
+    /* ── BUTTONS ─────────────────────────────────────────── */
+    .btn-fill {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--bg);
+      background: var(--cta);
+      padding: 0.95rem 2.6rem;
+      border: none;
+      transition: opacity 0.3s var(--ease), transform 0.15s ease;
+    }
+    .btn-fill:hover  { opacity: 0.86; }
+    .btn-fill:active { transform: scale(0.98); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      background: transparent;
+      padding: 0.95rem 2.6rem;
+      border: 1px solid var(--border-mid);
+      transition: border-color 0.3s ease, transform 0.15s ease;
+    }
+    .btn-ghost:hover  { border-color: rgba(240,237,232,0.38); }
+    .btn-ghost:active { transform: scale(0.98); }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 500;
+      padding: 1.4rem 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(12,12,14,0.75) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      position: relative;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.8rem;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: rgba(240,237,232,0.55);
+      transition: color 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--bg);
+      background: var(--cta);
+      padding: 0.55rem 1.4rem;
+      transition: opacity 0.25s ease;
+    }
+    .nav-cta:hover { opacity: 0.82; }
+
+    /* ── BURGER MENU ─────────────────────────────────────── */
+    .burger-btn {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      z-index: 601;
+      position: relative;
+    }
+    .burger-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .burger-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 550;
+      background: rgba(12,12,14,0.97);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-overlay.active {
+      display: flex;
+    }
+    .mobile-overlay a {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      transition: color 0.25s ease;
+    }
+    .mobile-overlay a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .burger-btn {
+        display: block;
+      }
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-color: #0C0C0E;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top,  rgba(12,12,14,1.0) 0%,  rgba(12,12,14,0.45) 38%, transparent 70%),
+        linear-gradient(to right, rgba(12,12,14,0.3) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 8vw 7.5vh;
+      max-width: 860px;
+    }
+    .hero-pretitle {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.6rem;
+      display: block;
+      animation: fade-up 1s var(--ease) 0.3s both;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(50px, 7.2vw, 104px);
+      line-height: 1.02;
+      letter-spacing: -0.028em;
+      color: var(--text);
+      margin-bottom: 1.4rem;
+      animation: fade-up 1s var(--ease) 0.5s both;
+    }
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: rgba(240,237,232,0.6);
+      margin-bottom: 3rem;
+      animation: fade-up 1s var(--ease) 0.7s both;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fade-up 1s var(--ease) 0.9s both;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── ARCHITECTURE ────────────────────────────────────── */
+    .arch-section {
+      display: grid;
+      grid-template-columns: 52% 48%;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+    .arch-img-col {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .arch-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      will-change: transform;
+    }
+    .arch-img-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 65%, #0C0C0E 100%);
+      pointer-events: none;
+    }
+    .arch-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10vh 8vw 10vh 5vw;
+    }
+    .arch-rule {
+      width: 36px;
+      height: 1px;
+      background: var(--accent);
+      margin: 1.8rem 0 2.8rem;
+    }
+    .arch-body { margin-top: 2rem; max-width: 46ch; }
+
+    /* ── FACTS ───────────────────────────────────────────── */
+    .facts-section {
+      display: grid;
+      grid-template-columns: 38% 62%;
+      align-items: start;
+    }
+    .facts-left {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 5vw 0 8vw;
+      border-right: 1px solid var(--border);
+    }
+    .facts-left .section-title { font-size: clamp(34px, 3.8vw, 58px); }
+    .facts-right {
+      padding: 14vh 6vw 14vh 5vw;
+    }
+    .fact-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 2rem;
+      padding: 4.5vh 0;
+      border-top: 1px solid var(--border);
+    }
+    .fact-row:last-child { border-bottom: 1px solid var(--border); }
+    .fact-idx {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--meta);
+      padding-top: 0.45rem;
+    }
+    .fact-num {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(44px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--accent);
+    }
+    .fact-unit {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--meta);
+      display: block;
+      margin-top: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+    .fact-desc {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 40ch;
+    }
+
+    /* ── LOCATION ────────────────────────────────────────── */
+    .location-section {
+      min-height: 100dvh;
+      padding: 13vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .location-header { margin-bottom: 5.5rem; }
+    .location-body {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 7vw;
+      align-items: center;
+    }
+    .location-map-wrap svg { width: 100%; height: auto; }
+    .location-points { display: flex; flex-direction: column; }
+    .loc-point {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1.4rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .loc-point:first-child { border-top: 1px solid var(--border); }
+    .loc-time {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      padding-top: 0.25rem;
+    }
+    .loc-name {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .loc-sub {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--meta);
+    }
+
+    /* ── SCENARIOS ───────────────────────────────────────── */
+    .scenarios-section {
+      min-height: 100dvh;
+      padding: 13vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .scenarios-header { margin-bottom: 5rem; }
+    .scenarios-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      grid-template-rows: auto auto auto;
+      gap: 1px;
+      background: var(--border);
+    }
+    .sc-card {
+      background: var(--bg);
+      padding: 3.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+      transition: background 0.4s ease;
+    }
+    .sc-card:hover { background: var(--surface); }
+    .sc-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .sc-card:nth-child(2) { grid-column: 2; grid-row: 1 / 3; min-height: 560px; }
+    .sc-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+    .sc-card:nth-child(4) {
+      grid-column: 1 / 3; grid-row: 3;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+      min-height: auto; padding: 2.8rem 3.2rem;
+    }
+    .sc-time {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .sc-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(22px, 2.4vw, 34px);
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 1.2rem 0 0.8rem;
+    }
+    .sc-body {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.68;
+      color: var(--text-dim);
+    }
+
+    /* ── FULLSCREEN (PARKING / HALLS) ────────────────────── */
+    .fs-section {
+      min-height: 100dvh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    .fs-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+    .fs-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(12,12,14,0.95) 0%, rgba(12,12,14,0.35) 45%, rgba(12,12,14,0.08) 100%);
+      pointer-events: none;
+    }
+    .fs-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 8vw 8.5vh;
+      max-width: 640px;
+    }
+    .fs-content .section-title { margin: 1.4rem 0 1.2rem; }
+
+    /* ── APARTMENTS ──────────────────────────────────────── */
+    .apts-section {
+      min-height: 100dvh;
+      padding: 13vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .apts-header { margin-bottom: 5rem; }
+    .apts-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .apt-card {
+      background: var(--bg);
+      padding: 3rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: background 0.35s ease;
+    }
+    .apt-card:hover { background: var(--surface); }
+    .apt-type {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--meta);
+    }
+    .apt-size {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(38px, 4.2vw, 56px);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-top: 0.5rem;
+    }
+    .apt-size-u {
+      font-size: 0.42em;
+      color: var(--meta);
+      vertical-align: super;
+    }
+    .apt-desc {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--meta);
+      line-height: 1.6;
+    }
+    .apt-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-top: 1rem;
+      transition: gap 0.25s ease;
+    }
+    .apt-link:hover { gap: 0.85rem; }
+
+    /* ── DEVELOPER ───────────────────────────────────────── */
+    .dev-section {
+      min-height: 100dvh;
+      padding: 13vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid var(--border);
+    }
+    .dev-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: center;
+      margin-top: 4.5rem;
+    }
+    .dev-text { max-width: 52ch; }
+    .dev-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      padding-left: 4vw;
+      border-left: 1px solid var(--border);
+    }
+    .dev-stat-n {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(44px, 5vw, 66px);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    .dev-stat-l {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--meta);
+      margin-top: 0.4rem;
+    }
+
+    /* ── FINAL CTA ───────────────────────────────────────── */
+    .cta-section {
+      min-height: 100dvh;
+      padding: 13vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-n {
+      position: absolute;
+      bottom: -0.12em;
+      right: -0.06em;
+      font-family: var(--serif);
+      font-size: 28vw;
+      font-weight: 400;
+      color: rgba(240,237,232,0.025);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+    }
+    .cta-form {
+      margin-top: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .f-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .f-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--meta);
+    }
+    .f-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-mid);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 300;
+      padding: 0.8rem 0;
+      outline: none;
+      transition: border-color 0.3s ease;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .f-input::placeholder { color: var(--meta); }
+    .f-input:focus { border-bottom-color: var(--accent); }
+    .f-submit {
+      margin-top: 0.5rem;
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--bg);
+      background: var(--cta);
+      border: none;
+      padding: 1.1rem 2rem;
+      transition: opacity 0.3s ease, transform 0.15s ease;
+    }
+    .f-submit:hover { opacity: 0.86; }
+    .f-submit:active { transform: scale(0.98); }
+    .f-submit:disabled {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border-mid);
+      opacity: 1;
+    }
+    .f-hint {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--meta);
+      margin-top: 2.5rem;
+      line-height: 1.6;
+      max-width: 42ch;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .footer {
+      padding: 2.5rem 8vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer span {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--meta);
+    }
+
+    /* ── REVEALS ─────────────────────────────────────────── */
+    .r {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity  0.85s var(--ease),
+        transform 0.85s var(--ease);
+    }
+    .r.on { opacity: 1; transform: translateY(0); }
+
+    .r[data-d="1"] { transition-delay: 0.08s; }
+    .r[data-d="2"] { transition-delay: 0.16s; }
+    .r[data-d="3"] { transition-delay: 0.24s; }
+    .r[data-d="4"] { transition-delay: 0.32s; }
+    .r[data-d="5"] { transition-delay: 0.40s; }
+
+    /* Line reveals */
+    .rl { overflow: hidden; display: block; }
+    .rl-inner {
+      display: block;
+      transform: translateY(106%);
+      transition: transform 0.78s var(--ease);
+    }
+    .rl.on .rl-inner { transform: translateY(0); }
+    .rl[data-d="1"] .rl-inner { transition-delay: 0.09s; }
+    .rl[data-d="2"] .rl-inner { transition-delay: 0.18s; }
+    .rl[data-d="3"] .rl-inner { transition-delay: 0.27s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .arch-section { grid-template-columns: 1fr; }
+      .arch-img-col { min-height: 55vh; }
+      .arch-img-veil { background: linear-gradient(to bottom, transparent 70%, #0C0C0E 100%); }
+      .arch-text-col { padding: 6vh 6vw; }
+      .facts-section { grid-template-columns: 1fr; }
+      .facts-left {
+        position: relative; height: auto;
+        padding: 8vh 6vw 4vh;
+        border-right: none; border-bottom: 1px solid var(--border);
+      }
+      .facts-right { padding: 5vh 6vw 10vh; }
+      .location-body { grid-template-columns: 1fr; }
+      .location-map-wrap { max-width: 360px; }
+      .scenarios-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .sc-card:nth-child(1),
+      .sc-card:nth-child(2),
+      .sc-card:nth-child(3) { grid-column: 1; grid-row: auto; }
+      .sc-card:nth-child(2) { min-height: 280px; }
+      .sc-card:nth-child(4) { grid-column: 1; grid-template-columns: 1fr; }
+      .apts-grid { grid-template-columns: 1fr 1fr; }
+      .dev-grid { grid-template-columns: 1fr; }
+      .dev-stats { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 3rem; flex-direction: row; flex-wrap: wrap; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 580px) {
+      .apts-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 44px; }
+      .hero-btns { flex-direction: column; }
+      .btn-fill, .btn-ghost { text-align: center; }
+      .footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ── PREFERS REDUCED MOTION ──────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .r { opacity: 1; transform: none; }
+      .rl-inner { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ░░ GRAIN OVERLAY ░░ -->
+<svg id="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <filter id="gf" color-interpolation-filters="linearRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#gf)" opacity="0.032" fill="#fff"/>
+</svg>
+
+<!-- ░░ MOBILE OVERLAY ░░ -->
+<div class="mobile-overlay" id="mobile-overlay" aria-label="Мобильное меню">
+  <a href="#architecture" class="mobile-nav-link">Архитектура</a>
+  <a href="#location" class="mobile-nav-link">Локация</a>
+  <a href="#apartments" class="mobile-nav-link">Квартиры</a>
+  <a href="#developer" class="mobile-nav-link">UDS</a>
+  <a href="#cta" class="mobile-nav-link">Получить презентацию</a>
+</div>
+
+<!-- ░░ NAV ░░ -->
+<nav class="nav" aria-label="Главная навигация">
+  <a href="#hero" class="nav-logo">N1</a>
+  <ul class="nav-links">
+    <li><a href="#architecture">Архитектура</a></li>
+    <li><a href="#location">Локация</a></li>
+    <li><a href="#apartments">Квартиры</a></li>
+    <li><a href="#developer">UDS</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Получить презентацию</a>
+  <button class="burger-btn" id="burger-btn" aria-label="Открыть меню" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+
+<!-- ██████████████████████████████████████████████
+     01  HERO
+     ██████████████████████████████████████████████ -->
+<section class="hero" id="hero" aria-label="Главный экран">
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <span class="hero-pretitle">Нижний Новгород · 2025 · UDS</span>
+    <h1 class="hero-title">Новый силуэт<br>города начинается<br>здесь</h1>
+    <p class="hero-sub">N1 — первый дом в Нижнем Новгороде от UDS</p>
+    <div class="hero-btns">
+      <a href="#apartments" class="btn-fill">Выбрать квартиру</a>
+      <a href="#cta" class="btn-ghost">Получить презентацию</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     02  АРХИТЕКТУРА
+     ██████████████████████████████████████████████ -->
+<section class="arch-section" id="architecture" aria-label="Архитектура">
+  <div class="arch-img-col">
+    <img
+      src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
+      alt="ЖК N1 — авторский архитектурный рендер"
+      class="arch-img"
+      id="parallax-img"
+      loading="lazy"
+    />
+    <div class="arch-img-veil" aria-hidden="true"></div>
+  </div>
+  <div class="arch-text-col">
+    <span class="meta r" data-d="0">Архитектура</span>
+    <div class="arch-rule r" data-d="1" aria-hidden="true"></div>
+    <h2 class="section-title r" data-d="2">
+      Авторская архитектура,<br>в которой читается<br>город
+    </h2>
+    <div class="arch-body r" data-d="3">
+      <p class="body">
+        Фасад N1 — это диалог с Нижним Новгородом. Каждая линия выверена
+        архитектором, а не выбрана из каталога. Дом встаёт в силуэт города
+        так, что его видно с набережной Оки.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     03  ФАКТЫ
+     ██████████████████████████████████████████████ -->
+<section class="facts-section" id="facts" aria-label="Факты о проекте">
+  <!-- sticky left -->
+  <div class="facts-left">
+    <span class="meta r" style="margin-bottom:1.4rem;">О проекте</span>
+    <h2 class="section-title r" data-d="1">
+      Четыре<br>причины<br>выбрать N1
+    </h2>
+  </div>
+  <!-- scrolling right -->
+  <div class="facts-right">
+
+    <div class="fact-row r" data-d="1">
+      <span class="fact-idx">01</span>
+      <div>
+        <div class="fact-num">19</div>
+        <span class="fact-unit">этажей</span>
+        <p class="fact-desc">Вертикаль, которую видно с набережной Оки. Каждый этаж открывает новый горизонт города.</p>
+      </div>
+    </div>
+
+    <div class="fact-row r" data-d="2">
+      <span class="fact-idx">02</span>
+      <div>
+        <div class="fact-num">2026</div>
+        <span class="fact-unit">год сдачи</span>
+        <p class="fact-desc">Строительство идёт по графику. UDS не нарушал сроки сдачи ни на одном из объектов.</p>
+      </div>
+    </div>
+
+    <div class="fact-row r" data-d="3">
+      <span class="fact-idx">03</span>
+      <div>
+        <div class="fact-num">247</div>
+        <span class="fact-unit">квартир</span>
+        <p class="fact-desc">Студии, 1-, 2- и 3-комнатные планировки. Каждый формат спроектирован под реальный образ жизни.</p>
+      </div>
+    </div>
+
+    <div class="fact-row r" data-d="4">
+      <span class="fact-idx">04</span>
+      <div>
+        <div class="fact-num">1:1</div>
+        <span class="fact-unit">машиноместо на квартиру</span>
+        <p class="fact-desc">Подземный паркинг с прямым лифтом в холл. Машина всегда рядом — и никогда не во дворе.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     04  ЛОКАЦИЯ
+     ██████████████████████████████████████████████ -->
+<section class="location-section" id="location" aria-label="Локация">
+  <div class="location-header">
+    <span class="meta r" style="margin-bottom:1.4rem;">Канавинский район</span>
+    <h2 class="section-title r" data-d="1">
+      Выигрышная локация<br>без перегруженного ритма
+    </h2>
+  </div>
+  <div class="location-body">
+
+    <!-- SVG-схема района -->
+    <div class="location-map-wrap r" data-d="1" aria-label="Схема расположения ЖК N1 в Канавинском районе">
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>Канавинский район, Нижний Новгород</title>
+        <rect width="460" height="460" fill="#131315"/>
+
+        <!-- Grid streets subtle -->
+        <line x1="0"   y1="150" x2="460" y2="150" stroke="#F0EDE8" stroke-width="0.4" stroke-opacity="0.08"/>
+        <line x1="0"   y1="220" x2="460" y2="220" stroke="#F0EDE8" stroke-width="0.4" stroke-opacity="0.08"/>
+        <line x1="0"   y1="290" x2="460" y2="290" stroke="#F0EDE8" stroke-width="0.5" stroke-opacity="0.12"/>
+        <line x1="100" y1="0"   x2="100" y2="330" stroke="#F0EDE8" stroke-width="0.4" stroke-opacity="0.08"/>
+        <line x1="200" y1="0"   x2="200" y2="330" stroke="#F0EDE8" stroke-width="0.6" stroke-opacity="0.14"/>
+        <line x1="320" y1="0"   x2="320" y2="330" stroke="#F0EDE8" stroke-width="0.4" stroke-opacity="0.08"/>
+
+        <!-- Railway dashed -->
+        <path d="M75 0 L90 330" stroke="#F0EDE8" stroke-width="2" stroke-opacity="0.18" stroke-dasharray="5 4"/>
+
+        <!-- River Oka -->
+        <path d="M0 345 C70 332 140 355 230 345 C310 335 390 350 460 345" stroke="#C4956A" stroke-width="2" stroke-opacity="0.35" fill="none"/>
+        <path d="M0 360 C70 347 140 368 230 358 C310 348 390 363 460 358" stroke="#C4956A" stroke-width="1.2" stroke-opacity="0.15" fill="none"/>
+        <text x="14" y="378" font-family="'JetBrains Mono', monospace" font-size="8" fill="#C4956A" opacity="0.5" letter-spacing="2.5">О К А</text>
+
+        <!-- Канавинский мост -->
+        <rect x="195" y="334" width="54" height="8" fill="none" stroke="#F0EDE8" stroke-width="0.8" stroke-opacity="0.22"/>
+        <text x="172" y="329" font-family="'JetBrains Mono', monospace" font-size="7" fill="#F0EDE8" opacity="0.28">К. МОСТ</text>
+
+        <!-- Вокзал -->
+        <rect x="54" y="80" width="46" height="28" rx="2" fill="#1A1A1C" stroke="#F0EDE8" stroke-width="0.7" stroke-opacity="0.22"/>
+        <text x="62" y="98" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#F0EDE8" opacity="0.38">МВ</text>
+
+        <!-- Street labels -->
+        <text x="204" y="213" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#F0EDE8" opacity="0.28" letter-spacing="1.5">ПР. ЛЕНИНА</text>
+        <text x="104" y="283" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#F0EDE8" opacity="0.22" letter-spacing="1">УЛ. СОВЕТСКАЯ</text>
+
+        <!-- N1 marker -->
+        <circle cx="230" cy="255" r="22" fill="none" stroke="#C4956A" stroke-width="1.2" stroke-opacity="0.5"/>
+        <circle cx="230" cy="255" r="5.5" fill="#C4956A"/>
+        <circle cx="230" cy="255" r="12" fill="#C4956A" opacity="0.12"/>
+        <!-- pulse -->
+        <circle cx="230" cy="255" r="22" fill="none" stroke="#C4956A" stroke-width="1" stroke-opacity="0.35">
+          <animate attributeName="r" values="22;36;22" dur="2.8s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0.35;0;0.35" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+        <text x="248" y="249" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#C4956A" letter-spacing="1.5">N1</text>
+
+        <!-- Footer label -->
+        <text x="12" y="446" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#6B6B6B" letter-spacing="1.8">КАНАВИНСКИЙ Р-Н · Н. НОВГОРОД</text>
+      </svg>
+    </div>
+
+    <div class="location-points">
+      <div class="loc-point r" data-d="1">
+        <span class="loc-time">3 мин</span>
+        <div>
+          <div class="loc-name">Московский вокзал</div>
+          <div class="loc-sub">Связь с любой точкой страны пешком</div>
+        </div>
+      </div>
+      <div class="loc-point r" data-d="2">
+        <span class="loc-time">7 мин</span>
+        <div>
+          <div class="loc-name">Исторический центр</div>
+          <div class="loc-sub">Нижегородский кремль, набережная Волги</div>
+        </div>
+      </div>
+      <div class="loc-point r" data-d="3">
+        <span class="loc-time">10 мин</span>
+        <div>
+          <div class="loc-name">Нижегородская ярмарка</div>
+          <div class="loc-sub">Деловой и культурный центр города</div>
+        </div>
+      </div>
+      <div class="loc-point r" data-d="4">
+        <span class="loc-time">15 мин</span>
+        <div>
+          <div class="loc-name">Набережная Оки</div>
+          <div class="loc-sub">Парковые зоны, пробежки, прогулки</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     05  СЦЕНАРИИ ЖИЗНИ
+     ██████████████████████████████████████████████ -->
+<section class="scenarios-section" id="scenarios" aria-label="Образ жизни">
+  <div class="scenarios-header">
+    <span class="meta r" style="margin-bottom:1.4rem;">Образ жизни</span>
+    <h2 class="section-title r" data-d="1">
+      Дом продуман<br>в каждом ежедневном<br>маршруте
+    </h2>
+  </div>
+
+  <div class="scenarios-grid">
+
+    <div class="sc-card r" data-d="1">
+      <div>
+        <span class="sc-time">07:30 — Утро</span>
+        <h3 class="sc-title">Кофе за углом,<br>не в пробке</h3>
+      </div>
+      <p class="sc-body">Три кофейни в пяти минутах пешком. Утро начинается без машины и очередей.</p>
+    </div>
+
+    <div class="sc-card r" data-d="2">
+      <div>
+        <span class="sc-time">09:00 — День</span>
+        <h3 class="sc-title">Центр города без пересадок</h3>
+      </div>
+      <p class="sc-body">Прямой выход к транспортному узлу. Вокзал, трамваи, метро — всё в радиусе прогулки. Ни одной вынужденной поездки на машине.</p>
+    </div>
+
+    <div class="sc-card r" data-d="3">
+      <div>
+        <span class="sc-time">19:00 — Вечер</span>
+        <h3 class="sc-title">Спортзал в доме,<br>набережная рядом</h3>
+      </div>
+      <p class="sc-body">Собственный фитнес-зал на первом этаже. Ока — для вечерних пробежек.</p>
+    </div>
+
+    <div class="sc-card r" data-d="4">
+      <div>
+        <span class="sc-time">Выходные</span>
+        <h3 class="sc-title">Ярмарка, театр,<br>набережная Волги</h3>
+      </div>
+      <p class="sc-body">Культурная программа без поездок в другой конец города. N1 стоит там, где живёт сам город.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     06  ПАРКИНГ
+     ██████████████████████████████████████████████ -->
+<section class="fs-section" id="parking" aria-label="Паркинг">
+  <div
+    class="fs-bg"
+    id="parking-bg"
+    style="background-image: url('https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=1920&q=80'); background-color: #111113;"
+    role="img"
+    aria-label="Подземный паркинг ЖК N1"
+  ></div>
+  <div class="fs-overlay" aria-hidden="true"></div>
+  <div class="fs-content">
+    <span class="meta r">Паркинг</span>
+    <h2 class="section-title r" data-d="1">
+      Больше порядка<br>в квартире, больше<br>свободы в жизни
+    </h2>
+    <p class="body r" data-d="2" style="margin-top:0.2rem; max-width:44ch;">
+      Подземный паркинг с прямым лифтом в жилой холл.
+      Машина всегда рядом — но никогда не во дворе.
+    </p>
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     07  ХОЛЛЫ
+     ██████████████████████████████████████████████ -->
+<section class="fs-section" id="halls" aria-label="Входные группы">
+  <div
+    class="fs-bg"
+    id="halls-bg"
+    style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80'); background-color: #13120F;"
+    role="img"
+    aria-label="Лобби ЖК N1"
+  ></div>
+  <div class="fs-overlay" aria-hidden="true"></div>
+  <div class="fs-content">
+    <span class="meta r">Входные группы</span>
+    <h2 class="section-title r" data-d="1">
+      Дом начинается<br>раньше двери<br>квартиры
+    </h2>
+    <p class="body r" data-d="2" style="margin-top:0.2rem; max-width:44ch;">
+      Холлы N1 спроектированы как продолжение жилого пространства.
+      Натуральные материалы, мягкий свет, консьерж-сервис.
+    </p>
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     08  КВАРТИРЫ
+     ██████████████████████████████████████████████ -->
+<section class="apts-section" id="apartments" aria-label="Квартиры">
+  <div class="apts-header">
+    <span class="meta r" style="margin-bottom:1.4rem;">Квартиры</span>
+    <h2 class="section-title r" data-d="1">
+      Подберите формат,<br>который подходит<br>именно вам
+    </h2>
+  </div>
+
+  <div class="apts-grid">
+
+    <div class="apt-card r" data-d="1">
+      <div class="apt-type">Студия</div>
+      <div class="apt-size">от&thinsp;28<span class="apt-size-u">м²</span></div>
+      <p class="apt-desc">Продуманное пространство для старта без лишней площади</p>
+      <a href="#cta" class="apt-link" aria-label="Узнать цену на студию">
+        Узнать цену
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M1.5 6.5h10M7.5 2.5l4 4-4 4" stroke="#C4956A" stroke-width="1.2" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="apt-card r" data-d="2">
+      <div class="apt-type">1-комнатная</div>
+      <div class="apt-size">от&thinsp;42<span class="apt-size-u">м²</span></div>
+      <p class="apt-desc">Отдельная спальня, широкая гостиная, продуманное хранение</p>
+      <a href="#cta" class="apt-link" aria-label="Узнать цену на 1-комнатную">
+        Узнать цену
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M1.5 6.5h10M7.5 2.5l4 4-4 4" stroke="#C4956A" stroke-width="1.2" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="apt-card r" data-d="3">
+      <div class="apt-type">2-комнатная</div>
+      <div class="apt-size">от&thinsp;64<span class="apt-size-u">м²</span></div>
+      <p class="apt-desc">Для семьи с рабочей зоной и местом для каждого</p>
+      <a href="#cta" class="apt-link" aria-label="Узнать цену на 2-комнатную">
+        Узнать цену
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M1.5 6.5h10M7.5 2.5l4 4-4 4" stroke="#C4956A" stroke-width="1.2" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="apt-card r" data-d="4">
+      <div class="apt-type">3-комнатная</div>
+      <div class="apt-size">от&thinsp;89<span class="apt-size-u">м²</span></div>
+      <p class="apt-desc">Флагманский формат: панорамы, простор, видовые этажи</p>
+      <a href="#cta" class="apt-link" aria-label="Узнать цену на 3-комнатную">
+        Узнать цену
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M1.5 6.5h10M7.5 2.5l4 4-4 4" stroke="#C4956A" stroke-width="1.2" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     09  ЗАСТРОЙЩИК
+     ██████████████████████████████████████████████ -->
+<section class="dev-section" id="developer" aria-label="О застройщике">
+  <span class="meta r" style="margin-bottom:1.4rem;">Застройщик</span>
+  <h2 class="section-title r" data-d="1">Проект от UDS</h2>
+
+  <div class="dev-grid">
+    <div class="dev-text r" data-d="2">
+      <p class="body" style="max-width:52ch; margin-bottom:2.5rem;">
+        UDS — федеральный застройщик с присутствием в 16 городах России.
+        Компания работает по принципу полного цикла: от проектирования до
+        управления готовым домом. Каждый объект сдаётся в срок и сохраняет
+        стоимость после сдачи.
+      </p>
+      <a href="#cta" class="btn-fill">Узнать подробнее</a>
+    </div>
+    <div class="dev-stats r" data-d="3">
+      <div>
+        <div class="dev-stat-n">16</div>
+        <div class="dev-stat-l">городов присутствия</div>
+      </div>
+      <div>
+        <div class="dev-stat-n">47</div>
+        <div class="dev-stat-l">сданных объектов</div>
+      </div>
+      <div>
+        <div class="dev-stat-n">0</div>
+        <div class="dev-stat-l">просроченных сдач</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ██████████████████████████████████████████████
+     10  ФИНАЛЬНЫЙ CTA
+     ██████████████████████████████████████████████ -->
+<section class="cta-section" id="cta" aria-label="Получить презентацию">
+  <div class="cta-bg-n" aria-hidden="true">N1</div>
+  <div class="cta-inner">
+    <span class="meta r" style="margin-bottom:1.4rem;">Получить материалы</span>
+    <h2 class="section-title r" data-d="1">
+      Получите презентацию<br>проекта
+    </h2>
+    <p class="body r" data-d="2" style="margin-top:1.4rem; max-width:46ch;">
+      Планировки, цены, инфраструктура, условия — всё в одном документе.
+      Отправим в течение нескольких минут.
+    </p>
+
+    <form class="cta-form r" data-d="3" id="lead-form" novalidate>
+      <div class="f-group">
+        <label class="f-label" for="f-name">Имя</label>
+        <input
+          class="f-input"
+          type="text"
+          id="f-name"
+          name="name"
+          placeholder="Ваше имя"
+          autocomplete="given-name"
+          required
+        >
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="f-phone">Телефон</label>
+        <input
+          class="f-input"
+          type="tel"
+          id="f-phone"
+          name="phone"
+          placeholder="+7 (___) ___-__-__"
+          autocomplete="tel"
+          required
+        >
+      </div>
+      <div>
+        <button type="submit" class="f-submit" id="f-btn">
+          Получить презентацию
+        </button>
+      </div>
+    </form>
+
+    <p class="f-hint r" data-d="4">
+      Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.
+      Данные не передаются третьим лицам.
+    </p>
+  </div>
+</section>
+
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <span>© 2025 ЖК N1 · Нижний Новгород · Застройщик: UDS</span>
+  <span>Проектная декларация размещена на наш.дом.рф</span>
+</footer>
+
+
+<script>
+  /* ─────────────────────────────────────────────────
+     BURGER MENU — toggle mobile overlay
+  ─────────────────────────────────────────────────── */
+  (function () {
+    var burger = document.getElementById('burger-btn');
+    var overlay = document.getElementById('mobile-overlay');
+    if (!burger || !overlay) return;
+
+    burger.addEventListener('click', function () {
+      var isActive = burger.classList.toggle('active');
+      overlay.classList.toggle('active');
+      burger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      document.body.style.overflow = isActive ? 'hidden' : '';
+    });
+
+    // Close overlay when a link is clicked
+    var links = overlay.querySelectorAll('a');
+    links.forEach(function (link) {
+      link.addEventListener('click', function () {
+        burger.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+
+
+  /* ─────────────────────────────────────────────────
+     INTERSECTION OBSERVER — reveal on scroll
+  ─────────────────────────────────────────────────── */
+  (function () {
+    var els = document.querySelectorAll('.r');
+    var lineEls = document.querySelectorAll('.rl');
+
+    var opts = { threshold: 0.14, rootMargin: '0px 0px -30px 0px' };
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          obs.unobserve(e.target);
+        }
+      });
+    }, opts);
+
+    var lineObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          lineObs.unobserve(e.target);
+        }
+      });
+    }, opts);
+
+    els.forEach(function (el) { obs.observe(el); });
+    lineEls.forEach(function (el) { lineObs.observe(el); });
+  })();
+
+
+  /* ─────────────────────────────────────────────────
+     PARALLAX — architecture render
+  ─────────────────────────────────────────────────── */
+  (function () {
+    var img = document.getElementById('parallax-img');
+    if (!img) return;
+    var section = img.closest('.arch-section');
+    var ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          var rect = section.getBoundingClientRect();
+          // Only run when section is in view
+          if (rect.bottom < 0 || rect.top > window.innerHeight) {
+            ticking = false;
+            return;
+          }
+          var progress = (-rect.top) / (section.offsetHeight + window.innerHeight);
+          var offset = progress * 80;
+          img.style.transform = 'translateY(' + offset.toFixed(2) + 'px) scale(1.06)';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Initial scale so parallax has room
+    img.style.transform = 'translateY(0) scale(1.06)';
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+
+  /* ─────────────────────────────────────────────────
+     FORM — submit handler
+  ─────────────────────────────────────────────────── */
+  (function () {
+    var form = document.getElementById('lead-form');
+    var btn  = document.getElementById('f-btn');
+    if (!form || !btn) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name  = form.querySelector('#f-name').value.trim();
+      var phone = form.querySelector('#f-phone').value.trim();
+      if (!name || !phone) return;
+
+      btn.textContent = 'Отправлено — ожидайте звонка';
+      btn.disabled = true;
+    });
+
+    // Phone mask — simple formatting
+    var phoneInput = document.getElementById('f-phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function (e) {
+        var v = e.target.value.replace(/\D/g, '');
+        if (v.length === 0) { e.target.value = ''; return; }
+        var out = '+7 ';
+        if (v.length > 1) out += '(' + v.substring(1, 4);
+        if (v.length >= 4) out += ') ' + v.substring(4, 7);
+        if (v.length >= 7) out += '-' + v.substring(7, 9);
+        if (v.length >= 9) out += '-' + v.substring(9, 11);
+        e.target.value = out;
+      });
+    }
+  })();
+
+
+  /* ─────────────────────────────────────────────────
+     SMOOTH NAV — active section highlight
+  ─────────────────────────────────────────────────── */
+  (function () {
+    var navLinks = document.querySelectorAll('.nav-links a');
+    var sections = [];
+    navLinks.forEach(function (a) {
+      var id = a.getAttribute('href').replace('#', '');
+      var el = document.getElementById(id);
+      if (el) sections.push({ el: el, link: a });
+    });
+
+    var scrollObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var match = sections.find(function (s) { return s.el === e.target; });
+        if (!match) return;
+        if (e.isIntersecting) {
+          navLinks.forEach(function (l) { l.style.color = ''; });
+          match.link.style.color = 'rgba(240,237,232,0.9)';
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(function (s) { scrollObs.observe(s.el); });
+  })();
+</script>
+
+</body>
+</html>
